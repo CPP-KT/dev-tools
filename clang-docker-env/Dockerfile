@@ -8,7 +8,9 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get -y install tzdata
 RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null && \
     echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
 
-RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" && \
+RUN wget https://apt.llvm.org/llvm.sh && \
+    chmod +x llvm.sh && \
+    ./llvm.sh all && \
     ln -s /usr/bin/clang++-14 /usr/bin/c++ && \
     ln -s /usr/bin/clang-14 /usr/bin/cc
 
@@ -20,10 +22,14 @@ RUN apt-get update &&  \
 # ENV CXX='/usr/bin/clang++'
 
 RUN git clone https://github.com/microsoft/vcpkg.git && \
-    cd vcpkg && ./bootstrap-vcpkg.sh && \
-    ./vcpkg install gtest benchmark && \
-    chown -R builder /vcpkg
+    cd vcpkg && ./bootstrap-vcpkg.sh
+
+COPY x64-linux-clang.cmake /vcpkg/triplets/
+COPY clang-toolchain.cmake /vcpkg/triplets/
+
+RUN chown -R builder /vcpkg
+
+ENV VCPKG_DEFAULT_TRIPLET=x64-linux-clang
 
 USER builder
-WORKDIR /app
 
