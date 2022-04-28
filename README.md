@@ -19,4 +19,6 @@
 - Создаем новый docker тулчейн
   * image - выбираем наш image (`clang-remote-dev` или как он был назван при сборке)
   * build-tool - `/usr/bin/ninja`
-- В настройках **каждой** cmake-конфигурации нужно указать `-DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake`
+- В настройках **каждой** cmake-конфигурации нужно указать 
+  - `-DCMAKE_TOOLCHAIN_FILE=/vcpkg/scripts/buildsystems/vcpkg.cmake`
+  - [Только если это clang образ] `-DVCPKG_TARGET_TRIPLET=x64-linux-clang`
