@@ -20,6 +20,9 @@ RUN apt-get update &&  \
         --slave /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-11 \
         --slave /usr/bin/cpp cpp /usr/bin/cpp-11
 
+RUN ln -s /usr/bin/g++ /usr/bin/c++ && \
+    ln -s /usr/bin/gcc /usr/bin/cc
+
 RUN git clone https://github.com/microsoft/vcpkg.git && \
     cd vcpkg && ./bootstrap-vcpkg.sh && \
     ./vcpkg install gtest benchmark && \
