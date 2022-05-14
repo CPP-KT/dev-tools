@@ -1,4 +1,5 @@
-FROM ubuntu
+FROM ubuntu:20.04
+
 
 ARG UID=1000
 RUN useradd -m -u ${UID} -s /bin/bash builder
@@ -15,7 +16,7 @@ RUN wget https://apt.llvm.org/llvm.sh && \
     ln -s /usr/bin/clang-14 /usr/bin/cc
 
 RUN apt-get update &&  \
-    apt-get install --no-install-recommends -y rsync tar git zip curl unzip pkg-config gdb cmake ninja-build && \
+    apt-get install --no-install-recommends -y rsync tar git zip curl unzip pkg-config gdb cmake ninja-build linux-tools-common linux-tools-generic linux-tools-`uname -r` && \
     apt-get clean
 
 # ENV CC='/usr/bin/clang'

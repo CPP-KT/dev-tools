@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:20.04
 
 ARG UID=1000
 RUN useradd -m -u ${UID} -s /bin/bash builder
@@ -11,7 +11,7 @@ RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/nul
     add-apt-repository ppa:ubuntu-toolchain-r/test
 
 RUN apt-get update &&  \
-    apt-get install --no-install-recommends -y rsync tar git zip curl unzip pkg-config gdb cmake ninja-build gcc-11 g++-11 binutils && \
+    apt-get install --no-install-recommends -y rsync tar git zip curl unzip pkg-config gdb cmake ninja-build gcc-11 g++-11 binutils linux-tools-common linux-tools-generic linux-tools-`uname -r` && \
     apt-get clean && \
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 110 \
         --slave /usr/bin/g++ g++ /usr/bin/g++-11 \
