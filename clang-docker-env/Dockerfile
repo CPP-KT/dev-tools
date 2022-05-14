@@ -16,8 +16,10 @@ RUN wget https://apt.llvm.org/llvm.sh && \
     ln -s /usr/bin/clang-14 /usr/bin/cc
 
 RUN apt-get update &&  \
-    apt-get install --no-install-recommends -y rsync tar git zip curl unzip pkg-config gdb cmake ninja-build linux-tools-common linux-tools-generic linux-tools-`uname -r` && \
+    apt-get install --no-install-recommends -y rsync tar git zip curl unzip pkg-config gdb cmake ninja-build linux-tools-common linux-tools-generic && \
     apt-get clean
+
+RUN ln -fs /usr/lib/linux-tools/*/perf /usr/bin/perf
 
 # ENV CC='/usr/bin/clang'
 # ENV CXX='/usr/bin/clang++'
