@@ -21,7 +21,7 @@ docker run hello-world
 Установите [Docker Desktop](https://docs.docker.com/desktop/windows/install/)
 
 
-## Собираем или скачиваем образ
+## Собираем образ
 
 Собрать образ можно руками:
 ```
@@ -29,17 +29,6 @@ cd clang-docker-env
 docker build --build-arg UID=$(id -u) -t clang-remote-dev .
 ```
 Про то, зачем нужен аргумент `UID`, можно почитать ниже в гайде про интеграцию с Clion.
-
-
-Можно ничего не собирать и скачать последнюю версию, загруженную нами в публичный Docker Hub:
-```
-docker pull lejabq/cpp-kt-clang:latest
-```
-И аналогично для тулчейна с gcc:
-```
-docker pull lejabq/cpp-kt-gcc:latest
-```
-Обратите внимание, что тогда образ локально у вас будет называться иначе. Все образы в системе можно посмотреть командой `docker images`.
 
 ### Используем
 
